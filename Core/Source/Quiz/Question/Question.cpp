@@ -2,10 +2,9 @@
 
 #include <iostream>
 
-Question::Question(const char* title, std::vector<const char*>* answers, int correctAnswerIndex)
+Question::Question(std::string title, std::vector<std::string>* answers, int correctAnswerIndex)
 {
 	this->title = title;
 	this->answers = *answers;
 	this->correctAnswerIndex = correctAnswerIndex;
-	std::cout << "qqqq";
 }

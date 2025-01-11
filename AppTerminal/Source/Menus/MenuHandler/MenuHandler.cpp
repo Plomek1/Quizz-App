@@ -10,11 +10,16 @@ void MainMenu() { OpenMainMenu(); }
 void CreatorMenu() { OpenCreatorMenu(); }
 void GameplayMenu() { OpenGameplayMenu(); }
 
-char GetPlayerInput()
+std::string GetPlayerInput()
 {
     std::string answer;
     std::cin >> answer;
-    return char(std::tolower(answer[0]));
+    for (int i = 0; i < answer.length(); i++)
+    {
+        answer[i] = tolower(answer[i]);
+    }
+
+    return answer;
 }
 
 

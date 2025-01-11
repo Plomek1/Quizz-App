@@ -18,13 +18,17 @@ void OpenCreatorMenu()
 			std::cout << "\nPlease enter correct option\n";
 		std::cout << '\n';
 
-		char answer = GetPlayerInput();
+		std::string answer = GetPlayerInput();
 
-		switch (answer)
+
+		if (answer.length() == 1)
 		{
-		case 'm': //Main menu
-			MainMenu();
-			return;
+			switch (answer[0])
+			{
+			case 'm': //Main menu
+				MainMenu();
+				return;
+			}
 		}
 
 		repeat = true;

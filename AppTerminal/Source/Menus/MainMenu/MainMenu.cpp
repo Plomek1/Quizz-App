@@ -19,22 +19,25 @@ void OpenMainMenu()
 			std::cout << "\nPlease enter correct option\n";
 		std::cout << '\n';
 
-		char answer = GetPlayerInput();
+		std::string answer = GetPlayerInput();
 
-		switch (answer)
+		if (answer.length() == 1)
 		{
-		case 'p': //Gameplay
-			GameplayMenu();
-			return;
+			switch (answer[0])
+			{
+			case 'p': //Gameplay
+				GameplayMenu();
+				return;
 
-		case 'c': //Creator
-			CreatorMenu();
-			return;
+			case 'c': //Creator
+				CreatorMenu();
+				return;
 
-		case 'e':
-			ClearScreen(); //Exit
-			std::cout << "See you next time!\n";
-			return;
+			case 'e':
+				ClearScreen(); //Exit
+				std::cout << "See you next time!\n";
+				return;
+			}
 		}
 
 		repeat = true;
