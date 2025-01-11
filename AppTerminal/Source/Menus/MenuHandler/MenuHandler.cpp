@@ -22,6 +22,29 @@ std::string GetPlayerInput()
     return answer;
 }
 
+bool GetPlayerIntInput(int& playerInput)
+{
+    try
+    {
+        std::string answer;
+        std::cin >> answer;
+        int input = std::stoi(answer);
+        playerInput = input;
+        return true;
+    }
+    catch (const std::invalid_argument& e) { return false; }
+}
+
+bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput)
+{
+    try
+    {
+        int input = std::stoi(playerInput);
+        parsedInput = input;
+        return true;
+    }
+    catch (const std::invalid_argument& e) { return false; }
+}
 
 //https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648
 void ClearScreen(char fill)

@@ -43,9 +43,10 @@ void OpenGameplayMenu()
 				return;
 			}
 		}
-		try
+
+		int quizIndex;
+		if (ParsePlayerInputToInt(answer, quizIndex))
 		{
-			int quizIndex = std::stoi(answer);
 			if (quizIndex > quizzes.size())
 			{
 				repeat = true;
@@ -55,7 +56,6 @@ void OpenGameplayMenu()
 			PlayQuiz(quizzes[quizIndex - 1]);
 			return;
 		}
-		catch (const std::invalid_argument& e) {}
 
 		repeat = true;
 	} while (repeat);
@@ -104,16 +104,14 @@ bool AskQuestion(Question &question, bool &answerCorrect, bool displayRepeatMess
 		std::cout << "\nPlease enter correct option\n";
 	std::cout << '\n';
 
-	std::string answer = GetPlayerInput();
-
-	try
+	int answerIndex;
+	if (GetPlayerIntInput(answerIndex))
 	{
-		int answerIndex = std::stoi(answer) - 1;
 		if (answerIndex > question.answers.size())
 			return false;
 
-		answerCorrect = answerIndex == question.correctAnswerIndex;
+		answerCorrect = answerIndex - 1 == question.correctAnswerIndex;
 		return true;
 	}
-	catch (const std::invalid_argument& e) { return false; }
+	return false;
 }
