@@ -7,7 +7,7 @@ void OpenCreatorMenu()
 {
 
 	bool repeat = false;
-	while (true)
+	do
 	{
 		ClearScreen();
 		
@@ -32,5 +32,5 @@ void OpenCreatorMenu()
 		}
 
 		repeat = true;
-	}
+	} while (repeat);
 }

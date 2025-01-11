@@ -6,7 +6,7 @@
 void OpenMainMenu()
 {
 	bool repeat = false;
-	while (true)
+	do
 	{
 		ClearScreen();
 
@@ -41,5 +41,5 @@ void OpenMainMenu()
 		}
 
 		repeat = true;
-	}
+	} while (repeat);
 }

@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-void PrintQuizQuestion(Question &question);
-void OpenQuiz(Quiz &quiz);
+bool AskQuestion(Question &question, bool &answerCorrect, bool displayRepeatMessage);
+void PlayQuiz(Quiz &quiz);
 
 void OpenGameplayMenu()
 {
@@ -13,8 +13,7 @@ void OpenGameplayMenu()
 
 	bool repeat = false;
 
-	while (true)
-	{
+	do {
 		ClearScreen();
 
 		std::cout << "-----Gameplay Menu-----\n";
@@ -26,7 +25,7 @@ void OpenGameplayMenu()
 		{
 			std::cout << '\n';
 			for (int i = 0; i < quizzes.size(); i++)
-				std::cout << "Press " << i+1 << " to play " << quizzes[i].title << '\n';
+				std::cout << "Press " << i + 1 << " to play " << quizzes[i].title << '\n';
 		}
 
 		if (repeat)
@@ -44,7 +43,7 @@ void OpenGameplayMenu()
 				return;
 			}
 		}
-		try 
+		try
 		{
 			int quizIndex = std::stoi(answer);
 			if (quizIndex > quizzes.size())
@@ -53,30 +52,68 @@ void OpenGameplayMenu()
 				continue;
 			}
 
-			OpenQuiz(quizzes[quizIndex - 1]);
+			PlayQuiz(quizzes[quizIndex - 1]);
 			return;
 		}
-		catch (const std::invalid_argument& e) { }
+		catch (const std::invalid_argument& e) {}
 
 		repeat = true;
+	} while (repeat);
+}
+
+void PlayQuiz(Quiz& quiz)
+{
+	int score = 0;
+	int maxScore = quiz.questions.size();
+
+	for (int i = 0; i < maxScore; i++)
+	{
+		bool repeat = false;
+
+		do
+		{
+			ClearScreen();
+			std::cout << "-----" << quiz.title << "-----     " << score << '/' << maxScore << "\n\n";
+
+			bool answerCorrect;
+			if (AskQuestion(quiz.questions[i], answerCorrect, repeat))
+			{
+				if (answerCorrect) score++;
+				break;
+			}
+
+			repeat = true;
+		} while (repeat);
 	}
 
-}
-
-void OpenQuiz(Quiz& quiz)
-{
 	ClearScreen();
-	std::cout << quiz.title << '\n';
-	PrintQuizQuestion(quiz.questions[0]);
+	std::cout << "Quiz is over!" << '\n' << "Your score: " << score << '/' << maxScore << "\n\n" << "Press enter to continue...";
+	std::cin.ignore();
+	std::cin.get();
+	MainMenu();
 }
 
-void PrintQuizQuestion(Question& question)
+bool AskQuestion(Question &question, bool &answerCorrect, bool displayRepeatMessage)
 {
 	std::cout << question.title << '\n';
-	std::cout << question.answers[0] << '\n';
-	std::cout << question.answers[1] << '\n';
-	std::cout << question.answers[2] << '\n';
-	std::cout << question.answers[3] << '\n';
-	std::cout << "Correct: " << question.answers[question.correctAnswerIndex] << '\n';
-	std::cin.get();
+
+	for (int i = 0; i < question.answers.size(); i++)
+		std::cout << i + 1 << ". " << question.answers[i] << '\n';
+
+	if(displayRepeatMessage)
+		std::cout << "\nPlease enter correct option\n";
+	std::cout << '\n';
+
+	std::string answer = GetPlayerInput();
+
+	try
+	{
+		int answerIndex = std::stoi(answer) - 1;
+		if (answerIndex > question.answers.size())
+			return false;
+
+		answerCorrect = answerIndex == question.correctAnswerIndex;
+		return true;
+	}
+	catch (const std::invalid_argument& e) { return false; }
 }
