@@ -2,12 +2,15 @@
 
 #include <string>
 
-void MainMenu();
-void CreatorMenu();
-void GameplayMenu();
+namespace AppTerminal
+{
+	void MainMenu();
+	void CreatorMenu();
+	void GameplayMenu();
 
-void ClearScreen(char fill = ' ');
+	void ClearScreen(char fill = ' ');
 
-std::string GetPlayerInput();
-bool GetPlayerIntInput(int& playerInput);
-bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput);
+	std::string GetPlayerInput();
+	bool GetPlayerIntInput(int& playerInput);
+	bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput);
+}

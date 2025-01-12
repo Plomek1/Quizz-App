@@ -1,4 +1,6 @@
 #pragma once
 
-void OpenGameplayMenu();
-
+namespace AppTerminal
+{
+	void OpenGameplayMenu();
+}

@@ -1,3 +1,6 @@
 #pragma once
 
-void OpenMainMenu();
+namespace AppTerminal
+{
+	void OpenMainMenu();
+}

@@ -1,13 +1,20 @@
 #pragma once
 
-#include "Question/Question.h"
+#include "Question.h"
 
-
-class Quiz
+namespace Core
 {
-public:
-	std::string title;
-	std::vector<Question> questions;
-	Quiz(std::string title, std::vector<Question>* questions);
-};
+	struct Quiz
+	{
+	public:
+		std::string title;
+		std::vector<Question> questions;
+
+		Quiz(std::string title, std::vector<Question>* questions)
+		{
+			this->title = title;
+			this->questions = *questions;
+		}
+	};
+}
 

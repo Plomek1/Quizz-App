@@ -1,4 +1,6 @@
 #pragma once
 
-void OpenCreatorMenu();
-
+namespace AppTerminal
+{
+	void OpenCreatorMenu();
+}

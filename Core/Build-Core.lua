@@ -9,7 +9,9 @@ project "Core"
 
    includedirs
    {
-      "Source"
+      "Source",
+      
+      "../Dependencies/single_include"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")

@@ -6,55 +6,58 @@
 #include <iostream>
 #include <windows.h>
 
-void MainMenu() { OpenMainMenu(); }
-void CreatorMenu() { OpenCreatorMenu(); }
-void GameplayMenu() { OpenGameplayMenu(); }
-
-std::string GetPlayerInput()
+namespace AppTerminal
 {
-    std::string answer;
-    std::cin >> answer;
-    for (int i = 0; i < answer.length(); i++)
-    {
-        answer[i] = tolower(answer[i]);
-    }
+    void MainMenu() { OpenMainMenu(); }
+    void CreatorMenu() { OpenCreatorMenu(); }
+    void GameplayMenu() { OpenGameplayMenu(); }
 
-    return answer;
-}
-
-bool GetPlayerIntInput(int& playerInput)
-{
-    try
+    std::string GetPlayerInput()
     {
         std::string answer;
         std::cin >> answer;
-        int input = std::stoi(answer);
-        playerInput = input;
-        return true;
-    }
-    catch (const std::invalid_argument& e) { return false; }
-}
+        for (int i = 0; i < answer.length(); i++)
+        {
+            answer[i] = tolower(answer[i]);
+        }
 
-bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput)
-{
-    try
+        return answer;
+    }
+
+    bool GetPlayerIntInput(int& playerInput)
     {
-        int input = std::stoi(playerInput);
-        parsedInput = input;
-        return true;
+        try
+        {
+            std::string answer;
+            std::cin >> answer;
+            int input = std::stoi(answer);
+            playerInput = input;
+            return true;
+        }
+        catch (const std::invalid_argument& e) { return false; }
     }
-    catch (const std::invalid_argument& e) { return false; }
-}
 
-//https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648
-void ClearScreen(char fill)
-{
-    COORD tl = { 0,0 };
-    CONSOLE_SCREEN_BUFFER_INFO s;
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    GetConsoleScreenBufferInfo(console, &s);
-    DWORD written, cells = s.dwSize.X * s.dwSize.Y;
-    FillConsoleOutputCharacter(console, fill, cells, tl, &written);
-    FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
-    SetConsoleCursorPosition(console, tl);
+    bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput)
+    {
+        try
+        {
+            int input = std::stoi(playerInput);
+            parsedInput = input;
+            return true;
+        }
+        catch (const std::invalid_argument& e) { return false; }
+    }
+
+    //https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648
+    void ClearScreen(char fill)
+    {
+        COORD tl = { 0,0 };
+        CONSOLE_SCREEN_BUFFER_INFO s;
+        HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+        GetConsoleScreenBufferInfo(console, &s);
+        DWORD written, cells = s.dwSize.X * s.dwSize.Y;
+        FillConsoleOutputCharacter(console, fill, cells, tl, &written);
+        FillConsoleOutputAttribute(console, s.wAttributes, cells, tl, &written);
+        SetConsoleCursorPosition(console, tl);
+    }
 }

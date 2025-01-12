@@ -2,5 +2,8 @@
 
 #include "../Quiz/Quiz.h"
 
-std::vector<Quiz> LoadQuizzes();
+namespace Core
+{
+	bool LoadQuizzes(std::vector<Quiz>& quizList);
+}
 
