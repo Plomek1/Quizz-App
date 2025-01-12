@@ -1,22 +1,16 @@
 #include "QuizLoader.h"
+#include "../SaveManager/SaveManager.h"
 
-#include<string>
-#include <nlohmann/json.hpp>
-
-#include <shlobj.h>
 #include <iostream>
 
 namespace Core
 {
-	bool GetDocumentsPath(std::string& documentsPath);
-
-	bool LoadQuizzes(std::vector<Quiz> &quizList)
+	bool LoadQuizzesLoader(std::vector<Quiz> &quizList)
 	{
-		//Simulating reading from json
-
 		std::string documentsPath;
-		if (!GetDocumentsPath(documentsPath))
-			return false;
+
+		Quiz test = Quiz("test", new std::vector<Question>);
+		SaveQuiz(test);
 
 		std::cout << documentsPath;
 
@@ -34,25 +28,6 @@ namespace Core
 			quizList.push_back(Quiz(qName.c_str(), &questions));
 		}
 
-		return true;
-	}
-
-	//https://stackoverflow.com/questions/2414828/get-path-to-my-documents
-	//https://stackoverflow.com/questions/6006319/converting-tchar-to-string-in-c
-	bool GetDocumentsPath(std::string &documentsPath)
-	{
-		TCHAR path[MAX_PATH];
-		
-		HRESULT result = SHGetFolderPath(NULL, CSIDL_COMMON_DOCUMENTS, NULL, SHGFP_TYPE_CURRENT, path);
-
-		if (result != S_OK)
-		{
-			std::cout << "Error while trying to get Documents path: " << result << '\n';
-			return false;
-		}
-
-		std::wstring wstring(path);
-		documentsPath = std::string(wstring.begin(), wstring.end());
 		return true;
 	}
 }

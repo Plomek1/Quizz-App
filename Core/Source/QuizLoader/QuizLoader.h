@@ -4,6 +4,6 @@
 
 namespace Core
 {
-	bool LoadQuizzes(std::vector<Quiz>& quizList);
+	bool LoadQuizzesLoader(std::vector<Quiz>& quizList);
 }
 

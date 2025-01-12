@@ -12,7 +12,7 @@ namespace AppTerminal
 	void OpenGameplayMenu()
 	{
 		std::vector<Core::Quiz> quizzes;
-		Core::LoadQuizzes(quizzes);
+		Core::LoadQuizzesLoader(quizzes);
 
 		bool repeat = false;
 
