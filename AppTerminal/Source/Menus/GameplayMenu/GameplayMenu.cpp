@@ -1,5 +1,5 @@
 #include "GameplayMenu.h"
-#include "QuizLoader/QuizLoader.h"
+#include "SaveManager/SaveManager.h"
 #include "../MenuHandler/MenuHandler.h"
 
 #include <iostream>
@@ -12,7 +12,7 @@ namespace AppTerminal
 	void OpenGameplayMenu()
 	{
 		std::vector<Core::Quiz> quizzes;
-		Core::LoadQuizzesLoader(quizzes);
+		int loadExitCode =Core::LoadQuizzes(quizzes);
 
 		bool repeat = false;
 
@@ -22,8 +22,12 @@ namespace AppTerminal
 			std::cout << "-----Gameplay Menu-----\n";
 			std::cout << "Press M to go to main menu\n";
 
-			if (quizzes.size() == 0)
+			if (loadExitCode == -1)
+				std::cout << "\nSave data is corrupted!\n";
+			
+			else if (loadExitCode == 0 || quizzes.size() == 0)
 				std::cout << "\nNo quizzes available, please create a quiz first!\n";
+			
 			else
 			{
 				std::cout << '\n';
@@ -50,7 +54,7 @@ namespace AppTerminal
 			int quizIndex;
 			if (ParsePlayerInputToInt(answer, quizIndex))
 			{
-				if (quizIndex > quizzes.size())
+				if (quizIndex > quizzes.size() || quizIndex <= 0)
 				{
 					repeat = true;
 					continue;
@@ -110,7 +114,7 @@ namespace AppTerminal
 		int answerIndex;
 		if (GetPlayerIntInput(answerIndex))
 		{
-			if (answerIndex > question.answers.size())
+			if (answerIndex > question.answers.size() || answerIndex <= 0)
 				return false;
 
 			answerCorrect = answerIndex - 1 == question.correctAnswerIndex;

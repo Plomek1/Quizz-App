@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <vector>
+#include <string>
 
 namespace Core
 {
@@ -19,4 +19,16 @@ namespace Core
 			this->correctAnswerIndex = correctAnswerIndex;
 		}
 	};
+	
+	//void to_json(nlohmann::json& j, Question& question)
+	//{
+	//	j = nlohmann::json{ {"title", question.title}, {"correctAnswerIndex", question.correctAnswerIndex}, { "answers", question.answers }};
+	//}
+
+	//void from_json(nlohmann::json j, Question& question)
+	//{
+	//	j.at("title").get_to(question.title);
+	//	j.at("correctAnswerIndex").get_to(question.correctAnswerIndex);
+	//	j.at("answers").get_to(question.answers);
+	//}
 }

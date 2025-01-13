@@ -1,12 +1,11 @@
 #pragma once
 
-#include <vector>
 #include <Quiz/Quiz.h>
 
 
 namespace Core
 {
-	bool LoadQuizzes(std::vector<Quiz>& quizzes);
-	bool SaveQuiz(Quiz& quiz);
+	int LoadQuizzes(std::vector<Quiz>& quizzes);
+	bool SaveQuizzes(std::vector<Quiz>& quizzes);
 	bool GetDocumentsPath(std::string& documentsPath);
 }

@@ -7,14 +7,6 @@ namespace Core
 {
 	bool LoadQuizzesLoader(std::vector<Quiz> &quizList)
 	{
-		std::string documentsPath;
-
-		Quiz test = Quiz("test", new std::vector<Question>);
-		SaveQuiz(test);
-
-		std::cout << documentsPath;
-
-
 		for (int i = 1; i <= 3; i++)
 		{
 			std::vector<Question> questions;
@@ -27,6 +19,8 @@ namespace Core
 			std::string qName = "Quiz " + std::to_string(i);
 			quizList.push_back(Quiz(qName.c_str(), &questions));
 		}
+
+		SaveQuizzes(quizList);
 
 		return true;
 	}
