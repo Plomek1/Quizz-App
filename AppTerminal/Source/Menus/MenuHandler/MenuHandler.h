@@ -7,6 +7,7 @@ namespace AppTerminal::MenuHandling
 	void MainMenu();
 	void CreatorMenu();
 	void GameplayMenu();
+	void InvalidInputError(bool invalidInput = true);
 
 	void ClearScreen(char fill = ' ');
 

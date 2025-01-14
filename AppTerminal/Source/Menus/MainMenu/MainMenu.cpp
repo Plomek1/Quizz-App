@@ -17,8 +17,7 @@ namespace AppTerminal::MenuHandling::Main
 			std::cout << "Press C to create quiz\n";
 			std::cout << "Press E to exit\n";
 
-			if (repeat)
-				std::cout << "\nInvalid input, please try again\n";
+			MenuHandling::InvalidInputError(repeat);
 			std::cout << '\n';
 
 			std::string answer = MenuHandling::GetPlayerInput();

@@ -11,6 +11,7 @@ namespace AppTerminal::MenuHandling
     void MainMenu() { Main::OpenMainMenu(); }
     void CreatorMenu() { Creator::OpenCreatorMenu(); }
     void GameplayMenu() { Gameplay::OpenGameplayMenu(); }
+    void InvalidInputError(bool invalidInput) { if(invalidInput) std::cout << "\nInvalid input, please try again\n";  }
 
     std::string GetPlayerInput()
     {

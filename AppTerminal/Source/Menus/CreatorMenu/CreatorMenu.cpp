@@ -7,7 +7,6 @@ namespace AppTerminal::MenuHandling::Creator
 {
 	void OpenCreatorMenu()
 	{
-
 		bool repeat = false;
 		do
 		{
@@ -16,8 +15,7 @@ namespace AppTerminal::MenuHandling::Creator
 			std::cout << "-----Creator Menu-----\n";
 			std::cout << "Press M to go to main menu\n";
 
-			if (repeat)
-				std::cout << "\nInvalid input, please try again\n";
+			MenuHandling::InvalidInputError(repeat);
 			std::cout << '\n';
 
 			std::string answer = GetPlayerInput();
