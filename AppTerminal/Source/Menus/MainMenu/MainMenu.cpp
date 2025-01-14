@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling::Main
 {
 	void OpenMainMenu()
 	{
 		bool repeat = false;
 		do
 		{
-			ClearScreen();
+			MenuHandling::ClearScreen();
 
 			std::cout << "-----Quiz Game-----\n";
 			std::cout << "Press P to play\n";
@@ -18,25 +18,25 @@ namespace AppTerminal
 			std::cout << "Press E to exit\n";
 
 			if (repeat)
-				std::cout << "\nPlease enter correct option\n";
+				std::cout << "\nInvalid input, please try again\n";
 			std::cout << '\n';
 
-			std::string answer = GetPlayerInput();
+			std::string answer = MenuHandling::GetPlayerInput();
 
 			if (answer.length() == 1)
 			{
 				switch (answer[0])
 				{
 				case 'p': //Gameplay
-					GameplayMenu();
+					MenuHandling::GameplayMenu();
 					return;
 
 				case 'c': //Creator
-					CreatorMenu();
+					MenuHandling::CreatorMenu();
 					return;
 
 				case 'e':
-					ClearScreen(); //Exit
+					MenuHandling::ClearScreen(); //Exit
 					std::cout << "See you next time!\n";
 					return;
 				}

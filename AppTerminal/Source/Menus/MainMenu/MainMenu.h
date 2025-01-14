@@ -1,6 +1,6 @@
 #pragma once
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling::Main
 {
 	void OpenMainMenu();
 }

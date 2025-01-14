@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling::Creator
 {
 	void OpenCreatorMenu()
 	{
@@ -17,7 +17,7 @@ namespace AppTerminal
 			std::cout << "Press M to go to main menu\n";
 
 			if (repeat)
-				std::cout << "\nPlease enter correct option\n";
+				std::cout << "\nInvalid input, please try again\n";
 			std::cout << '\n';
 
 			std::string answer = GetPlayerInput();

@@ -8,6 +8,8 @@
 
 namespace Core
 {
+	std::vector<Quiz> quizzes;
+
 	bool ConvertQuizzesToJson(std::vector<Quiz>& quizzes, nlohmann::json& json)
 	{
 		for (int i = 0; i < quizzes.size(); i++)

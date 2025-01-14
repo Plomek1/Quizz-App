@@ -6,11 +6,11 @@
 #include <iostream>
 #include <windows.h>
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling
 {
-    void MainMenu() { OpenMainMenu(); }
-    void CreatorMenu() { OpenCreatorMenu(); }
-    void GameplayMenu() { OpenGameplayMenu(); }
+    void MainMenu() { Main::OpenMainMenu(); }
+    void CreatorMenu() { Creator::OpenCreatorMenu(); }
+    void GameplayMenu() { Gameplay::OpenGameplayMenu(); }
 
     std::string GetPlayerInput()
     {

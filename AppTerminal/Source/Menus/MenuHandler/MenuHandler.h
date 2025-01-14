@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling
 {
 	void MainMenu();
 	void CreatorMenu();

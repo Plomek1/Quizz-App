@@ -1,6 +1,6 @@
 #pragma once
 
-namespace AppTerminal
+namespace AppTerminal::MenuHandling::Gameplay
 {
-	void OpenGameplayMenu();
+	void OpenGameplayMenu(bool loadQuizzesFromFile = true);
 }
