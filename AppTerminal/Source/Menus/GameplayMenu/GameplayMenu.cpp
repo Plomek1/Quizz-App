@@ -1,6 +1,7 @@
 #include "GameplayMenu.h"
 #include "SaveManager/SaveManager.h"
 #include "../MenuHandler/MenuHandler.h"
+#include "../MenuPrompts.h"
 
 #include <iostream>
 #include <optional>
@@ -9,20 +10,19 @@ namespace AppTerminal::MenuHandling::Gameplay
 {
 	std::optional<bool> AskQuestion(Core::Question& question, bool displayRepeatMessage);
 	void PlayQuiz(Core::Quiz& quiz);
+	void OpenQuizEndScreen(Core::Quiz& quiz, int score, int maxScore);
 	void SelectQuiz(Core::Quiz& quiz);
 	void DeleteQuiz(Core::Quiz& quiz);
 	void OpenMainMenu();
 
 	void DisplayQuizzes();
 	bool HandleQuizSelection();
-	bool HandleEndScreenSelection(Core::Quiz& quiz);
-	
+
 	std::vector<Core::Quiz> quizzes;
 	bool quizDeleted;
 	
 	void OpenGameplayMenu(bool loadQuizzesFromFile)
 	{
-
 		int loadExitCode = 0; 
 		if (loadQuizzesFromFile)
 		{
@@ -34,19 +34,19 @@ namespace AppTerminal::MenuHandling::Gameplay
 		bool repeat = false;
 
 		do {
-			MenuHandling::ClearScreen();
+			ClearScreen();
 
-			std::cout << "-----Gameplay Menu-----\n";
-			std::cout << "Press M to go to main menu\n";
+			std::cout << GAMEPLAY_MENU_PROMPT << '\n';
+			std::cout << GOTO_MAIN_MENU_PROMPT << '\n';
 
 			if (loadExitCode == -1)
-				std::cout << "\nSave data is corrupted!\n";
+				std::cout << DATA_CORRUPTED_PROMPT << '\n';
 			else if (quizzes.size() == 0)
-				std::cout << "\nNo quizzes available, please create a quiz first!\n";
+				std::cout << NO_QUIZZES_PROMPT << '\n';
 			else
 				DisplayQuizzes();
 
-			MenuHandling::InvalidInputError(repeat);
+			InvalidInputError(repeat);
 			std::cout << '\n';
 
 			repeat = !HandleQuizSelection();
@@ -57,25 +57,22 @@ namespace AppTerminal::MenuHandling::Gameplay
 	{
 		std::cout << '\n';
 		for (int i = 0; i < quizzes.size(); i++)
-			std::cout << "Press " << i + 1 << " to select " << quizzes[i].title << '\n';
+			std::cout << PRESS_PROMPT << i + 1 << TO_SELECT_PROMPT << quizzes[i].title << '\n';
 	}
 
 	bool HandleQuizSelection()
 	{
-		std::string answer = MenuHandling::GetPlayerInput();
+		std::string answer = GetPlayerInput();
 
-		if (answer.length() == 1 && answer[0] == 'm')
+		if (answer.length() == 1 && answer[0] == MAIN_MENU_OPTION)
 		{
 			OpenMainMenu();
 			return true;
 		}
 
 		int quizIndex;
-		if (MenuHandling::ParsePlayerInputToInt(answer, quizIndex))
+		if (ParsePlayerInputToInt(answer, quizIndex) && quizIndex > 0 && quizIndex <= quizzes.size())
 		{
-			if (quizIndex > quizzes.size() || quizIndex <= 0)
-				return false;
-
 			SelectQuiz(quizzes[quizIndex - 1]);
 			return true;
 		}
@@ -89,36 +86,22 @@ namespace AppTerminal::MenuHandling::Gameplay
 		
 		do
 		{
-			MenuHandling::ClearScreen();
-			std::cout << "-----" << quiz.title << "-----" << "\n\n";
-			std::cout << "Press P to play" << '\n';
-			std::cout << "Press D to go delete" << '\n';
-			std::cout << "Press B to go back" << '\n';
+			ClearScreen();
+			std::cout << DASHES_PROMPT << quiz.title << DASHES_PROMPT << "\n\n";
+			std::cout << PLAY_PROMPT << '\n';
+			std::cout << DELETE_PROMPT << '\n';
+			std::cout << GO_BACK_PROMPT << '\n';
 
-			MenuHandling::InvalidInputError(repeat);
+			InvalidInputError(repeat);
 			std::cout << '\n';
 
-			std::string answer = MenuHandling::GetPlayerInput();
+			std::string answer = GetPlayerInput();
+			std::unordered_map<char, std::function<void()>> actions;
+			actions[PLAY_OPTION] = [&quiz]() { PlayQuiz(quiz); };							 //Play
+			actions[DELETE_OPTION] = [&quiz]() { DeleteQuiz(quiz); OpenGameplayMenu(false); }; //Delete
+			actions[GO_BACK_OPTION] = []()	     { OpenGameplayMenu(false); };                   //Go back
 
-			if (answer.length() == 1)
-			{
-				switch (answer[0])
-				{
-				case 'p': //Play
-					PlayQuiz(quiz);
-					return;
-
-				case 'd': //Delete
-					DeleteQuiz(quiz);
-					OpenGameplayMenu(false);
-					return;
-
-				case 'b': //Go back
-					OpenGameplayMenu(false);
-					return;
-				}
-			}
-			repeat = true;
+			repeat = !HandleSingleCharInput(answer, actions);
 		} while (repeat);
 	}
 
@@ -130,15 +113,12 @@ namespace AppTerminal::MenuHandling::Gameplay
 		for (int i = 0; i < maxScore; i++)
 		{
 			bool repeat = false;
-
 			do
 			{
-				MenuHandling::ClearScreen();
-				std::cout << "-----" << quiz.title << "-----     " << score << '/' << maxScore << "\n\n";
+				ClearScreen();
+				std::cout << DASHES_PROMPT << quiz.title << DASHES_PROMPT << "     " << score << '/' << maxScore << "\n\n";
 
 				std::optional<bool> questionAnswer = AskQuestion(quiz.questions[i], repeat);
-
-				
 				if (questionAnswer != std::nullopt)
 				{
 					if (questionAnswer == true) score++;
@@ -149,45 +129,31 @@ namespace AppTerminal::MenuHandling::Gameplay
 
 			} while (repeat);
 		}
-
-		bool repeat = false;
-
-		do
-		{
-			MenuHandling::ClearScreen();
-			std::cout << "Quiz is over!" << '\n' << "Your score: " << score << '/' << maxScore << "\n\n";
-			std::cout << "Press R to try again" << '\n';
-			std::cout << "Press S to select another quiz" << '\n';
-			std::cout << "Press M to go to main menu" << '\n';
-
-			MenuHandling::InvalidInputError(repeat);
-			std::cout << '\n';
-
-			
-
-			repeat = !HandleEndScreenSelection(quiz);
-		} while (repeat);
+		OpenQuizEndScreen(quiz, score, maxScore);
 	}
 
-	bool HandleEndScreenSelection(Core::Quiz& quiz)
+	void OpenQuizEndScreen(Core::Quiz& quiz, int score, int maxScore)
 	{
-		std::string answer = MenuHandling::GetPlayerInput();
-		if (answer.size() == 1)
+		bool repeat = false;
+		do
 		{
-			switch (answer[0])
-			{
-			case 'r': //Retry
-				PlayQuiz(quiz);
-				return true;
-			case 's': //Select another quiz
-				OpenGameplayMenu(false);
-				return true;
-			case 'm': //Main menu
-				OpenMainMenu();
-				return true;
-			}
-		}
-		return false;
+			ClearScreen();
+			std::cout << "Quiz is over!" << '\n' << "Your score: " << score << '/' << maxScore << "\n\n";
+			std::cout << RETRY_PROMPT << '\n';
+			std::cout << SELECT_ANOTHER_QUIZ_PROMPT << '\n';
+			std::cout << GOTO_MAIN_MENU_PROMPT << '\n';
+
+			InvalidInputError(repeat);
+			std::cout << '\n';
+
+			std::string answer = GetPlayerInput();
+			std::unordered_map<char, std::function<void()>> actions;
+			actions[RETRY_OPTION] = [&quiz]() { PlayQuiz(quiz); };		   //Retry
+			actions[ANOTHER_QUIZ_OPTION] = []() { OpenGameplayMenu(false); }; //Select another quiz
+			actions[MAIN_MENU_OPTION] = []() { OpenMainMenu(); };          //Main menu
+
+			repeat = !HandleSingleCharInput(answer, actions);
+		} while (repeat);
 	}
 
 	std::optional<bool> AskQuestion(Core::Question& question, bool displayRepeatMessage)
@@ -197,11 +163,11 @@ namespace AppTerminal::MenuHandling::Gameplay
 		for (int i = 0; i < question.answers.size(); i++)
 			std::cout << i + 1 << ". " << question.answers[i] << '\n';
 
-		MenuHandling::InvalidInputError(displayRepeatMessage);
+		InvalidInputError(displayRepeatMessage);
 		std::cout << '\n';
 
 		int answerIndex;
-		if (MenuHandling::GetPlayerIntInput(answerIndex) && answerIndex > 0 && answerIndex <= question.answers.size())
+		if (GetPlayerIntInput(answerIndex) && answerIndex > 0 && answerIndex <= question.answers.size())
 			return answerIndex -1 == question.correctAnswerIndex;
 		
 		return std::nullopt;
@@ -225,6 +191,6 @@ namespace AppTerminal::MenuHandling::Gameplay
 	{
 		if (quizDeleted)
 			Core::SaveQuizzes(quizzes);
-		MenuHandling::MainMenu();
+		MainMenu();
 	}
 }

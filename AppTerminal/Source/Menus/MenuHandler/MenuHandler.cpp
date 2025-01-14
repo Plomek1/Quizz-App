@@ -2,6 +2,7 @@
 #include "../MainMenu/MainMenu.h"
 #include "../CreatorMenu/CreatorMenu.h"
 #include "../GameplayMenu/GameplayMenu.h"
+#include "../MenuPrompts.h"
 
 #include <iostream>
 #include <windows.h>
@@ -11,7 +12,7 @@ namespace AppTerminal::MenuHandling
     void MainMenu() { Main::OpenMainMenu(); }
     void CreatorMenu() { Creator::OpenCreatorMenu(); }
     void GameplayMenu() { Gameplay::OpenGameplayMenu(); }
-    void InvalidInputError(bool invalidInput) { if(invalidInput) std::cout << "\nInvalid input, please try again\n";  }
+    void InvalidInputError(bool invalidInput) { if (invalidInput) std::cout << '\n' << INPUT_INVALID_PROMPT << '\n'; }
 
     std::string GetPlayerInput()
     {
@@ -47,6 +48,17 @@ namespace AppTerminal::MenuHandling
             return true;
         }
         catch (const std::invalid_argument& e) { return false; }
+    }
+
+    bool HandleSingleCharInput(std::string input, std::unordered_map<char, std::function<void()>>& actions)
+    {
+        if (input.size() != 1) return false;
+
+        char key = input[0];
+        if (!actions.contains(key)) return false;
+    
+        actions[key]();
+        return true;
     }
 
     //https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648

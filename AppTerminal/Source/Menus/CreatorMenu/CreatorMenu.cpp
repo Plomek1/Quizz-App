@@ -1,5 +1,6 @@
 #include "CreatorMenu.h"
 #include "../MenuHandler/MenuHandler.h"
+#include "../MenuPrompts.h"
 
 #include <iostream>
 
@@ -12,26 +13,18 @@ namespace AppTerminal::MenuHandling::Creator
 		{
 			ClearScreen();
 
-			std::cout << "-----Creator Menu-----\n";
-			std::cout << "Press M to go to main menu\n";
+			std::cout << CREATOR_MENU_PROMPT << '\n';
+			std::cout << GOTO_MAIN_MENU_PROMPT << '\n';
 
-			MenuHandling::InvalidInputError(repeat);
+			InvalidInputError(repeat);
 			std::cout << '\n';
 
 			std::string answer = GetPlayerInput();
+			std::unordered_map<char, std::function<void()>> actions;
+			actions[MAIN_MENU_OPTION] = []() { MainMenu(); }; //Play
 
+			repeat = !HandleSingleCharInput(answer, actions);
 
-			if (answer.length() == 1)
-			{
-				switch (answer[0])
-				{
-				case 'm': //Main menu
-					MainMenu();
-					return;
-				}
-			}
-
-			repeat = true;
 		} while (repeat);
 	}
 }

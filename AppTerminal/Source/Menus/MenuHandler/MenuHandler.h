@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
+#include <functional>
 
 namespace AppTerminal::MenuHandling
 {
@@ -14,4 +16,5 @@ namespace AppTerminal::MenuHandling
 	std::string GetPlayerInput();
 	bool GetPlayerIntInput(int& playerInput);
 	bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput);
+	bool HandleSingleCharInput(std::string input, std::unordered_map<char, std::function<void()>>& actions);
 }
