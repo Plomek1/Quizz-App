@@ -148,9 +148,9 @@ namespace AppTerminal::MenuHandling::Gameplay
 
 			std::string answer = GetPlayerInput();
 			std::unordered_map<char, std::function<void()>> actions;
-			actions[RETRY_OPTION] = [&quiz]() { PlayQuiz(quiz); };		   //Retry
+			actions[RETRY_OPTION] = [&quiz]() { PlayQuiz(quiz); };		      //Retry
 			actions[ANOTHER_QUIZ_OPTION] = []() { OpenGameplayMenu(false); }; //Select another quiz
-			actions[MAIN_MENU_OPTION] = []() { OpenMainMenu(); };          //Main menu
+			actions[MAIN_MENU_OPTION] = []() { OpenMainMenu(); };             //Main menu
 
 			repeat = !HandleSingleCharInput(answer, actions);
 		} while (repeat);

@@ -15,6 +15,8 @@ namespace AppTerminal::MenuHandling
 	const std::string RETRY_PROMPT = "Press R to try again";
 	const std::string SELECT_ANOTHER_QUIZ_PROMPT = "Press S to select another quiz";
 	const std::string CREATE_QUIZ_PROMPT = "Press C to create quiz";
+	const std::string ADD_NEW_QUESTION_PROMPT = "Press A to add new question";
+	const std::string SAVE_QUIZ_PROMPT = "Press S to save quiz";
 	const std::string GOTO_MAIN_MENU_PROMPT = "Press M to go to main menu";
 	const std::string GO_BACK_PROMPT = "Press B to go back";
 	const std::string EXIT_PROMPT = "Press E to exit";
@@ -24,6 +26,12 @@ namespace AppTerminal::MenuHandling
 
 	const std::string QUIZ_OVER_PROMPT = "Quiz is over!";
 	const std::string YOUR_SCORE_PROMPT = "Your score: ";
+
+	const std::string ENTER_QUIZ_TITLE_PROMPT = "Enter quiz title:";
+	const std::string ENTER_QUESTION_TITLE_PROMPT = "Enter new question:";
+	const std::string ENTER_ANSWER_PROMPT = "Enter answer:";
+	const std::string ENTER_ANSWER_COUNT_PROMPT = "Enter answer count:";
+	const std::string ENTER_CORRECT_ANSWER_INDEX_PROMPT = "Enter correct answer index:";
 	
 	const std::string GOODBYE_PROMPT = "See you next time!";
 
@@ -36,6 +44,8 @@ namespace AppTerminal::MenuHandling
 	const char RETRY_OPTION = 'r';
 	const char ANOTHER_QUIZ_OPTION = 's';
 	const char CREATE_QUIZ_OPTION = 'c';
+	const char ADD_NEW_QUESTION_OPTION = 'a';
+	const char SAVE_QUIZ_OPTION = 's';
 	const char MAIN_MENU_OPTION = 'm';
 	const char GO_BACK_OPTION = 'b';
 	const char EXIT_OPTION = 'e';

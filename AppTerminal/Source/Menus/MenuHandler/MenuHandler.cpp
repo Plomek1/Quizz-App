@@ -19,9 +19,7 @@ namespace AppTerminal::MenuHandling
         std::string answer;
         std::cin >> answer;
         for (int i = 0; i < answer.length(); i++)
-        {
             answer[i] = tolower(answer[i]);
-        }
 
         return answer;
     }
