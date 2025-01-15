@@ -29,7 +29,7 @@ namespace AppTerminal::MenuHandling
 
 	const std::string ENTER_QUIZ_TITLE_PROMPT = "Enter quiz title:";
 	const std::string ENTER_QUESTION_TITLE_PROMPT = "Enter new question:";
-	const std::string ENTER_ANSWER_PROMPT = "Enter answer:";
+	const std::string ENTER_ANSWER_PROMPT = "Enter answer: ";
 	const std::string ENTER_ANSWER_COUNT_PROMPT = "Enter answer count:";
 	const std::string ENTER_CORRECT_ANSWER_INDEX_PROMPT = "Enter correct answer index:";
 	
