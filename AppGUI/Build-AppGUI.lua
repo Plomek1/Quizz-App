@@ -12,7 +12,10 @@ project "AppGUI"
       "Source",
 
 	  -- Include Core
-	  "../Core/Source"
+	  "../Core/Source",
+
+      "../Dependencies/include/imgui",
+      "../Dependencies/include/GLFW"
    }
 
    links
