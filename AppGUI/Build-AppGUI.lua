@@ -14,8 +14,7 @@ project "AppGUI"
 	  -- Include Core
 	  "../Core/Source",
 
-      "../Dependencies/include/imgui",
-      "../Dependencies/include/GLFW"
+      "../Dependencies/include/"
    }
 
    links

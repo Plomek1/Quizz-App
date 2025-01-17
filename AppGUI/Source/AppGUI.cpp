@@ -1,3 +1,6 @@
 #include "Core/Core.h"
 
-#include <imgui.h>
+int main()
+{
+
+}

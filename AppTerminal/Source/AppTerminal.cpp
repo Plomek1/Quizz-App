@@ -4,4 +4,5 @@
 int main()
 {
 	AppTerminal::MenuHandling::MainMenu();
+
 }
