@@ -13,10 +13,6 @@ project "ImGui"
         "../GLFW/include",
     }
 
-   libdirs { "../GLFW/lib" }
-
-   links{ "glfw3" }
-
    targetdir (workspaceDir .. "/Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir (workspaceDir .. "/Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
    

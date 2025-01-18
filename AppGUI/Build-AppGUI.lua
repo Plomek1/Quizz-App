@@ -16,8 +16,6 @@ project "AppGUI"
 
       "../Dependencies/GLFW/lib",
       "../Dependencies/GLFW/include",
-      "../Dependencies/glad",
-      
       "../Dependencies/imgui"
    }
 
@@ -27,6 +25,7 @@ project "AppGUI"
    {
       "Core",
       "glfw3",
+      "opengl32",
       "ImGui"
    }
 
