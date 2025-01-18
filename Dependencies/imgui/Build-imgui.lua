@@ -1,31 +1,28 @@
-project "AppTerminal"
-   kind "ConsoleApp"
+project "ImGui"
+   kind "StaticLib"
    language "C++"
    cppdialect "C++20"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "Source/**.h", "Source/**.cpp" }
+   files { "*.h", "*.cpp" }
 
-   includedirs
+   includedirs 
    {
-      "Source",
+        "../GLFW/lib",
+        "../GLFW/include",
+    }
 
-	  -- Include Core
-	  "../Core/Source"
-   }
+   libdirs { "../GLFW/lib" }
 
-   links
-   {
-      "Core"
-   }
+   links{ "glfw3" }
 
    targetdir (workspaceDir .. "/Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir (workspaceDir .. "/Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
-
+   
    filter "system:windows"
        systemversion "latest"
-       defines { "WINDOWS" }
+       defines { }
 
    filter "configurations:Debug"
        defines { "DEBUG" }

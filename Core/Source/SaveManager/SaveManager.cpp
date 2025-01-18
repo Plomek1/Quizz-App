@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <shlobj.h>
 
 namespace Core

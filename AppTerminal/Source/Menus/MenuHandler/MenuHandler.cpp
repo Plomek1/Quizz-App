@@ -17,7 +17,7 @@ namespace AppTerminal::MenuHandling
     std::string GetPlayerInput()
     {
         std::string answer;
-        std::cin >> answer;
+        std::getline(std::cin, answer);
         for (int i = 0; i < answer.length(); i++)
             answer[i] = tolower(answer[i]);
 
@@ -29,7 +29,7 @@ namespace AppTerminal::MenuHandling
         try
         {
             std::string answer;
-            std::cin >> answer;
+            std::getline(std::cin, answer);
             int input = std::stoi(answer);
             playerInput = input;
             return true;

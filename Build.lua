@@ -1,4 +1,6 @@
 -- premake5.lua
+workspaceDir = os.getcwd()
+
 workspace "Quizz App"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
@@ -10,9 +12,11 @@ workspace "Quizz App"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
-group "Core"
-	include "Core/Build-Core.lua"
-group ""
-
+include "Core/Build-Core.lua"
 include "AppTerminal/Build-AppTerminal.lua"
 include "AppGUI/Build-AppGUI.lua"
+
+group "Libs"
+   include "Dependencies/nlohmann/Build-NlohmannJson.lua"
+   include "Dependencies/imgui/Build-imgui.lua"
+group ""

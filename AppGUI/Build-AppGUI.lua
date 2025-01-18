@@ -14,16 +14,24 @@ project "AppGUI"
 	  -- Include Core
 	  "../Core/Source",
 
-      "../Dependencies/include/"
+      "../Dependencies/GLFW/lib",
+      "../Dependencies/GLFW/include",
+      "../Dependencies/glad",
+      
+      "../Dependencies/imgui"
    }
+
+   libdirs { "../Dependencies/GLFW/lib" }
 
    links
    {
-      "Core"
+      "Core",
+      "glfw3",
+      "ImGui"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir (workspaceDir .. "/Binaries/" .. OutputDir .. "/%{prj.name}")
+   objdir (workspaceDir .. "/Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"

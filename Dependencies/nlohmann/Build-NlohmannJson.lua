@@ -1,31 +1,18 @@
-project "AppTerminal"
-   kind "ConsoleApp"
+project "NlohmannJson"
+   kind "StaticLib"
    language "C++"
    cppdialect "C++20"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "Source/**.h", "Source/**.cpp" }
-
-   includedirs
-   {
-      "Source",
-
-	  -- Include Core
-	  "../Core/Source"
-   }
-
-   links
-   {
-      "Core"
-   }
+   files { "json.hpp", "json_fwd.hpp" }
 
    targetdir (workspaceDir .. "/Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir (workspaceDir .. "/Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"
-       defines { "WINDOWS" }
+       defines { }
 
    filter "configurations:Debug"
        defines { "DEBUG" }

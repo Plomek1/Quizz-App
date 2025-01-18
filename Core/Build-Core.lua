@@ -11,11 +11,11 @@ project "Core"
    {
       "Source",
       
-      "../Dependencies/single_include"
+      "../Dependencies/nlohmann"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir (workspaceDir .. "/Binaries/" .. OutputDir .. "/%{prj.name}")
+   objdir (workspaceDir .. "/Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"
