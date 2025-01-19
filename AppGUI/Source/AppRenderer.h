@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Menus/Menu.h"
+#include "MenuHandler.h"
 
 #include <functional>
 
 namespace AppGui
 {
-	void Render(Menu& activeMenu);
+	void Render(MenuHandler& handler);
 }

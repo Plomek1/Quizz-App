@@ -22,7 +22,7 @@ namespace AppGui
     }
 
     // Main code
-    void Render(Menu& activeMenu)
+    void Render(MenuHandler& handler)
     {
         glfwSetErrorCallback(glfw_error_callback);
         if (!glfwInit())
@@ -122,7 +122,7 @@ namespace AppGui
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            activeMenu.RenderMenu();
+            handler.ExecuteMenuRender();
 
             // Rendering
             ImGui::Render();

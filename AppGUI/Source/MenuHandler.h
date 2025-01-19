@@ -1,11 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 namespace AppGui
 {
-	class MainMenu;
-	class GameplayMenu;
+	class Menu;
 
 	class MenuHandler
 	{
@@ -14,12 +14,10 @@ namespace AppGui
 		~MenuHandler();
 
 		void StartGame();
+		void ExecuteMenuRender();
 		void ChangeMenu(int nextMenu);
 	private:
-		void RenderMenu();
-
-		std::unique_ptr<MainMenu> mainMenu;
-		std::unique_ptr<GameplayMenu> gameplayMenu;
+		std::vector<std::unique_ptr<Menu>> menus;
 
 		int activeMenu = 0;
 

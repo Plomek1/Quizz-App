@@ -2,9 +2,7 @@
 
 #include "MenuHandler.h"
 
-#include <memory>
 #include <functional>
-
 
 namespace AppGui
 {

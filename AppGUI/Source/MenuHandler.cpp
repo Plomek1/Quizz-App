@@ -13,32 +13,21 @@ namespace AppGui
 {
     void MenuHandler::StartGame()
     {
-        //mainMenu = new MainMenu(*this);
-        //gameplayMenu = new GameplayMenu(*this);
-        mainMenu = std::make_unique<MainMenu>(*this);
-        gameplayMenu = std::make_unique<GameplayMenu>(*this);
-        RenderMenu();
+        menus = std::vector<std::unique_ptr<Menu>>(3);
+        menus[0] = std::make_unique<MainMenu>(*this);
+        menus[1] = std::make_unique<GameplayMenu>(*this);
 
-        std::cin.get();
+        Render(*this);
     }
 
     void MenuHandler::ChangeMenu(int nextMenu)
     {
         activeMenu = nextMenu;
-        RenderMenu();
     }
 
-    void MenuHandler::RenderMenu()
+    void MenuHandler::ExecuteMenuRender()
 	{
-        switch (activeMenu)
-        {
-        case 0:
-            Render(*mainMenu);
-            return;
-        case 1:
-            Render(*gameplayMenu);
-            return;
-        }
+        menus[activeMenu]->RenderMenu();
 	}
 
     MenuHandler::MenuHandler() = default;
