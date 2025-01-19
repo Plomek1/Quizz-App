@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Menus/Menu.h"
+
 #include <functional>
 
-namespace AppGUI
+namespace AppGui
 {
-	void Render(std::function<void()>& renderFunction);
+	void Render(Menu& activeMenu);
 }

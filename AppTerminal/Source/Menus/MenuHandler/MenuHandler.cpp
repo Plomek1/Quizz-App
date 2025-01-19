@@ -14,12 +14,15 @@ namespace AppTerminal::MenuHandling
     void GameplayMenu() { Gameplay::OpenGameplayMenu(); }
     void InvalidInputError(bool invalidInput) { if (invalidInput) std::cout << '\n' << INPUT_INVALID_PROMPT << '\n'; }
 
-    std::string GetPlayerInput()
+    std::string GetPlayerInput(bool toLower)
     {
         std::string answer;
         std::getline(std::cin, answer);
-        for (int i = 0; i < answer.length(); i++)
-            answer[i] = tolower(answer[i]);
+        if (toLower)
+        {
+            for (int i = 0; i < answer.length(); i++)
+                answer[i] = tolower(answer[i]);
+        }
 
         return answer;
     }

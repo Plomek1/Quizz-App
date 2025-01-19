@@ -2,6 +2,6 @@
 
 int main()
 {
-	AppGUI::MenuHandler handler;
-	handler.RenderMenu();
+	AppGui::MenuHandler handler;
+	handler.StartGame();
 }

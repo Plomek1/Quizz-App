@@ -13,7 +13,7 @@ namespace AppTerminal::MenuHandling
 
 	void ClearScreen(char fill = ' ');
 
-	std::string GetPlayerInput();
+	std::string GetPlayerInput(bool toLower = true);
 	bool GetPlayerIntInput(int& playerInput);
 	bool ParsePlayerInputToInt(std::string playerInput, int& parsedInput);
 	bool HandleSingleCharInput(std::string input, std::unordered_map<char, std::function<void()>>& actions);

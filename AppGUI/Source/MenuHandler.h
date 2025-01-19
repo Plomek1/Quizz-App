@@ -1,14 +1,28 @@
 #pragma once
 
-namespace AppGUI
+#include <memory>
+
+namespace AppGui
 {
+	class MainMenu;
+	class GameplayMenu;
+
 	class MenuHandler
 	{
 	public:
-		void ChangeMenu(int newMenu);
-		void RenderMenu();
+		MenuHandler();
+		~MenuHandler();
+
+		void StartGame();
+		void ChangeMenu(int nextMenu);
 	private:
-		int activeMenu;
+		void RenderMenu();
+
+		std::unique_ptr<MainMenu> mainMenu;
+		std::unique_ptr<GameplayMenu> gameplayMenu;
+
+		int activeMenu = 0;
+
 	};
 }
 

@@ -25,9 +25,9 @@ namespace AppTerminal::MenuHandling::Creator
 			InvalidInputError(repeat);
 			std::cout << '\n';
 
-			std::string answer = GetPlayerInput();
+			std::string answer = GetPlayerInput(false);
 			
-			if (answer == "m")
+			if (answer == "m" || answer == "M")
 			{
 				MainMenu();
 				return;
@@ -97,7 +97,7 @@ namespace AppTerminal::MenuHandling::Creator
 	{
 		ClearScreen();
 		std::cout << ENTER_QUESTION_TITLE_PROMPT << "\n\n";
-		std::string title = GetPlayerInput();
+		std::string title = GetPlayerInput(false);
 		std::vector<std::string> answers;
 		int correctAnswerIndex;
 
@@ -153,7 +153,7 @@ namespace AppTerminal::MenuHandling::Creator
 			ClearScreen();
 
 			std::cout << ENTER_ANSWER_PROMPT << i + 1 << ":\n\n";
-			answers[i] = GetPlayerInput();
+			answers[i] = GetPlayerInput(false);
 		}
 		return answers;
 	}
