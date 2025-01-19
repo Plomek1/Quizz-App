@@ -14,13 +14,13 @@ namespace AppGui
 		~MenuHandler();
 
 		void StartGame();
+
 		void ExecuteMenuRender();
 		void ChangeMenu(int nextMenu);
+
 	private:
 		std::vector<std::unique_ptr<Menu>> menus;
-
 		int activeMenu = 0;
-
 	};
 }
 

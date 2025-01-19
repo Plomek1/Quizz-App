@@ -5,8 +5,6 @@
 #include "Menus/MainMenu.h"
 #include "Menus/GameplayMenu.h"
 
-#include <iostream>
-
 class MenuHandler;
 
 namespace AppGui
@@ -20,15 +18,8 @@ namespace AppGui
         Render(*this);
     }
 
-    void MenuHandler::ChangeMenu(int nextMenu)
-    {
-        activeMenu = nextMenu;
-    }
-
-    void MenuHandler::ExecuteMenuRender()
-	{
-        menus[activeMenu]->RenderMenu();
-	}
+    void MenuHandler::ExecuteMenuRender() { menus[activeMenu]->RenderMenu(); }
+    void MenuHandler::ChangeMenu(int nextMenu) { activeMenu = nextMenu; }
 
     MenuHandler::MenuHandler() = default;
     MenuHandler::~MenuHandler() = default;
