@@ -4,17 +4,16 @@
 
 class MenuHandler;
 
-namespace AppGui {
-
+namespace AppGui 
+{
 	class MainMenu : public Menu
 	{
 	public:
 		MainMenu(MenuHandler& handler) : Menu(handler) {}
+		
+		void OpenMenu() override {}
+		void CloseMenu() override {}
 		void RenderMenu() override;
-
-	private:
-		bool show_demo_window = true;
-		bool show_another_window = true;
 	};
 }
 

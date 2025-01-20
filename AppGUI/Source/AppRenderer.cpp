@@ -1,5 +1,7 @@
 #include "AppRenderer.h"
 
+#include "MenuHandler.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -22,12 +24,13 @@ namespace AppGui
     }
 
     // Main code
-    void Render(MenuHandler& handler)
+    void AppRenderer::RenderWindow(MenuHandler& handler)
     {
         glfwSetErrorCallback(glfw_error_callback);
         if (!glfwInit())
             return;
 
+    #pragma region Decicing versions
         // Decide GL+GLSL versions
 #if defined(IMGUI_IMPL_OPENGL_ES2)
     // GL ES 2.0 + GLSL 100 (WebGL 1.0)
@@ -56,9 +59,12 @@ namespace AppGui
         //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
         //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
+#pragma endregion
+
 
     // Create window with graphics context
-        GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+        
+        window = glfwCreateWindow(1280, 720, "Quizz App", nullptr, nullptr);
         if (window == nullptr)
             return;
         glfwMakeContextCurrent(window);
@@ -73,43 +79,19 @@ namespace AppGui
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
-        //ImGui::StyleColorsLight();
 
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        // Load Fonts
-        // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-        // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-        // - If the file cannot be loaded, the function will return a nullptr. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-        // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-        // - Use '#define IMGUI_ENABLE_FREETYPE' in your imconfig file to use Freetype for higher quality font rendering.
-        // - Read 'docs/FONTS.md' for more instructions and details.
-        // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-        // - Our Emscripten build process allows embedding fonts to be accessible at runtime from the "fonts/" folder. See Makefile.emscripten for details.
-        //io.Fonts->AddFontDefault();
-        //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-        //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
-        //IM_ASSERT(font != nullptr);
-
         // Our state
-        bool show_demo_window = true;
-        bool show_another_window = true;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
+        
         // Main loop
 
         while (!glfwWindowShouldClose(window))
         {
             // Poll and handle events (inputs, window resize, etc.)
-            // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-            // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
-            // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
-            // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
             glfwPollEvents();
             if (glfwGetWindowAttrib(window, GLFW_ICONIFIED) != 0)
             {
@@ -145,5 +127,15 @@ namespace AppGui
         glfwTerminate();
 
         return;
+    }
+
+    void AppRenderer::GetWindowSize(int& sizeX, int& sizeY)
+    {
+        glfwGetWindowSize(window, &sizeX, &sizeY);
+    }
+
+    void AppRenderer::CloseWindow()
+    {
+        glfwSetWindowShouldClose(window, true);
     }
 }

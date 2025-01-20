@@ -1,21 +1,25 @@
 #pragma once
 
-#include "MenuHandler.h"
-
 #include <functional>
 
 namespace AppGui
 {
+	class MenuHandler;
+	typedef int ImGuiWindowFlags;
+
 	class Menu
 	{
 	public: 
+		virtual void OpenMenu() = 0;
+		virtual void CloseMenu() = 0;
 		virtual void RenderMenu() = 0;
 
 	protected:
-		Menu(MenuHandler& handler) : handler(handler) {};
+		Menu(MenuHandler& handler);
 		
-		inline void Exit(int nextMenu) { handler.ChangeMenu(nextMenu); }
+		void Exit(int nextMenu);
 		MenuHandler& handler;
+		ImGuiWindowFlags menuFlags;
 	};
 }
 
