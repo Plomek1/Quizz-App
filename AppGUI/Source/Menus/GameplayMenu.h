@@ -18,8 +18,22 @@ namespace AppGui
 
 	private:
 		void PlayQuiz(Core::Quiz& quiz);
+		void ExitQuiz();
+
+		void RenderQuizSelection();
+		void RenderQuizGameplay();
 
 		std::vector<Core::Quiz> quizzes;
+		
+		struct ActiveQuiz
+		{
+			Core::Quiz* quiz = nullptr;
+			unsigned int score = 0;
+			unsigned int currentQuestion = 0;
+		};
+
+		bool playingQuiz = false;
+		ActiveQuiz activeQuiz;
 	};
 }
 
