@@ -4,7 +4,10 @@ Simple quizz app made in C++. You can use Terminal or GUI version to create and 
 
 Quizzes are stored in JSON file at Documents/QuizzApp/quizzes.json
 
-## Used libraries
+## Build guide
+Run Setup.exe, open the solution with Visual Studio and you are ready to go
+
+### Used libraries
 -GLFW (https://github.com/glfw/glfw)
 
 -Dear ImGui (https://github.com/ocornut/imgui)
