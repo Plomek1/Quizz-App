@@ -18,5 +18,12 @@ namespace Core
 			this->answers = *answers;
 			this->correctAnswerIndex = correctAnswerIndex;
 		}
+
+		Question() 
+		{
+			this->title = "";
+			this->answers = std::vector<std::string>{ "" };
+			this->correctAnswerIndex = 0;
+		};
 	};
 }

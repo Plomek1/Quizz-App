@@ -15,17 +15,12 @@ namespace Core
 			this->title = title;
 			this->questions = *questions;
 		}
+
+		Quiz() 
+		{
+			this->title = "";
+			this->questions = std::vector<Question>{ Question() };
+		}
 	};
-
-	//void to_json(nlohmann::json& j, Quiz& quiz)
-	//{
-	//	j = nlohmann::json{ {"title", quiz.title}, {"questions", quiz.questions} };
-	//}
-
-	//void from_json(nlohmann::json& j, Quiz& quiz)
-	//{
-	//	j.at("title").get_to(quiz.title);
-	//	j.at("questions").get_to(quiz.questions);
-	//}
 }
 

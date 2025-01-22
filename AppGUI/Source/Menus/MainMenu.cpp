@@ -16,8 +16,11 @@ namespace AppGui
         ImGui::SetWindowSize(ImVec2(sizeX, sizeY));
 
 
-        if (ImGui::Button("Gameplay Menu"))
+        if (ImGui::Button("Play"))
             handler.ChangeMenu(1);
+
+        if (ImGui::Button("Quiz editor"))
+            handler.ChangeMenu(2);
         
         if (ImGui::Button("Quit"))
             handler.ExitGame();

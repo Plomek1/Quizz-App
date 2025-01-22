@@ -3,6 +3,7 @@
 #include "AppRenderer.h"
 #include "Menus/MainMenu.h"
 #include "Menus/GameplayMenu.h"
+#include "Menus/CreatorMenu.h"
 
 namespace AppGui
 {
@@ -13,6 +14,7 @@ namespace AppGui
         menus = std::vector<std::unique_ptr<Menu>>(3);
         menus[0] = std::make_unique<MainMenu>(*this);
         menus[1] = std::make_unique<GameplayMenu>(*this);
+        menus[2] = std::make_unique<CreatorMenu>(*this);
 
         appRenderer->RenderWindow(*this);
     }

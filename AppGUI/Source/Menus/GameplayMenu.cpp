@@ -115,10 +115,16 @@ namespace AppGui
             std::string prompt = "Quiz over!\nYour score: " + std::to_string(activeQuiz.score) + '/' + std::to_string(questionsCount);
             ImGui::Text(prompt.c_str());
 
+            if (ImGui::Button("Retry"))
+            {
+                SelectQuiz(*activeQuiz.quiz);
+                StartQuiz();
+            }
             if (ImGui::Button("Select another quiz"))
                 ExitQuiz();
             if (ImGui::Button("Return to main menu"))
                 handler.ChangeMenu(0);
+            
             return;
         }
 
