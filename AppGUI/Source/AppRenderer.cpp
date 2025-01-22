@@ -80,11 +80,14 @@ namespace AppGui
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
 
+        //Disable ini and log files
+        io.IniFilename = NULL;
+        io.LogFilename = NULL;
+
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        // Our state
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
         
         // Main loop
