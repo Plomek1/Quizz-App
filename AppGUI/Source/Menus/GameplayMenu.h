@@ -17,13 +17,18 @@ namespace AppGui
 		void RenderMenu() override;
 
 	private:
-		void PlayQuiz(Core::Quiz& quiz);
+		void SelectQuiz(Core::Quiz& quiz);
+		void StartQuiz();
 		void ExitQuiz();
 
-		void RenderQuizSelection();
-		void RenderQuizGameplay();
+		void DeleteQuiz(Core::Quiz& quiz);
+
+		void RenderQuizList();
+		void RenderSelectedQuiz();
+		void RenderPlayedQuiz();
 
 		std::vector<Core::Quiz> quizzes;
+		bool quizDeleted = false;
 		
 		struct ActiveQuiz
 		{
@@ -32,7 +37,14 @@ namespace AppGui
 			unsigned int currentQuestion = 0;
 		};
 
-		bool playingQuiz = false;
+		enum menuState
+		{
+			LIST,
+			SELECTED,
+			PLAYING
+		};
+
+		menuState menuState = LIST;
 		ActiveQuiz activeQuiz;
 	};
 }

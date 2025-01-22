@@ -5,15 +5,19 @@
 
 #include <imgui.h>
 
-#include <iostream>
-
 namespace AppGui
 {
     void GameplayMenu::OpenMenu() { Core::LoadQuizzes(quizzes); }
 
     void GameplayMenu::CloseMenu() 
     { 
-        if (playingQuiz) ExitQuiz();
+        if (menuState == LIST) ExitQuiz();
+
+        if (quizDeleted)
+        {
+            Core::SaveQuizzes(quizzes);
+            quizDeleted = true;
+        }
         quizzes.clear();
     }
 
@@ -27,41 +31,84 @@ namespace AppGui
         handler.GetWindowSize(sizeX, sizeY);
         ImGui::SetWindowSize(ImVec2(sizeX, sizeY));
 
-
-        playingQuiz ? RenderQuizGameplay() : RenderQuizSelection();
-
+        switch (menuState)
+        {
+        case LIST:
+            RenderQuizList();
+            break;
+        case SELECTED:
+            RenderSelectedQuiz();
+            break;
+        case PLAYING:
+            RenderPlayedQuiz();
+            break;
+        }
+        
         ImGui::End();
     }
 
-    void GameplayMenu::PlayQuiz(Core::Quiz& quiz)
+    void GameplayMenu::SelectQuiz(Core::Quiz& quiz)
     {
-        std::cout << "Playing: " << quiz.title << std::endl;
-        playingQuiz = true;
+        menuState = SELECTED;
         activeQuiz = { &quiz, 0, 0};
+    }
+
+    void GameplayMenu::StartQuiz()
+    {
+        menuState = PLAYING;
     }
 
     void GameplayMenu::ExitQuiz()
     {
-        playingQuiz = false;
+        menuState = LIST;
         activeQuiz = {};
     }
 
+    void GameplayMenu::DeleteQuiz(Core::Quiz& quiz)
+    {
+        for (int i = 0; i < quizzes.size(); i++)
+        {
+            if (&quizzes[i] == &quiz)
+            {
+                quizzes.erase(quizzes.begin() + i);
+                break;
+            }
+        }
 
-    void GameplayMenu::RenderQuizSelection()
+        quizDeleted = true;
+    }
+
+    void GameplayMenu::RenderQuizList()
     {
         for (Core::Quiz& quiz : quizzes)
         {
             if (ImGui::Button(quiz.title.c_str()))
-                PlayQuiz(quiz);
+                SelectQuiz(quiz);
         }
 
         if (ImGui::Button("Main Menu"))
             handler.ChangeMenu(0);
     }
 
-    void GameplayMenu::RenderQuizGameplay()
+    void GameplayMenu::RenderSelectedQuiz()
     {
+        std::string title = activeQuiz.quiz->title;
+        ImGui::Text(title.c_str());
+        if (ImGui::Button("Play"))
+            StartQuiz();
         
+        if (ImGui::Button("Delete"))
+        {
+            DeleteQuiz(*activeQuiz.quiz);
+            ExitQuiz();
+        }
+        
+        if (ImGui::Button("Go back"))
+            ExitQuiz();
+    }
+
+    void GameplayMenu::RenderPlayedQuiz()
+    {
         unsigned int questionsCount = activeQuiz.quiz->questions.size();
         if (activeQuiz.currentQuestion == questionsCount)
         {
