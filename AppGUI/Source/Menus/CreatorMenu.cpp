@@ -31,6 +31,9 @@ namespace AppGui
 		if (ImGui::Button("Save quiz") && SaveQuiz())
 			handler.ChangeMenu(0);
 
+		if (ImGui::Button("Main Menu"))
+			handler.ChangeMenu(0);
+
 		ImGui::End();
 	}
 

@@ -11,7 +11,8 @@ namespace AppGui
 
     void GameplayMenu::CloseMenu() 
     { 
-        if (menuState == LIST) ExitQuiz();
+        ExitQuiz();
+        menuState = LIST;
 
         if (quizDeleted)
         {
